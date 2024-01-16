@@ -1,6 +1,8 @@
 #ifndef MONTY_H
 #define MONTY_H
 
+#include <stdio.h>
+
 /**
  * struct instruction_s - opcode and its function
  * @opcode: the opcode
