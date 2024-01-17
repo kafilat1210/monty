@@ -46,4 +46,9 @@ void kf_process_file(char *filename, stack_t **stack);
 int is_number(const char *str);
 void kf_pint(stack_t **stack, unsigned int line_number);
 void kf_free_stack(stack_t **stack);
+void kf_exec_op(char *opcode, char *arg, stack_t **stack,
+		unsigned int line_number);
+void kf_swap(stack_t **stack, unsigned int line_number);
+void kf_pop(stack_t **stack, unsigned int line_number);
+
 #endif /* MONTY_H */
