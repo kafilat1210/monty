@@ -68,6 +68,7 @@ void kf_mod(stack_t **stack, unsigned int line_number)
 void kf_pchar(stack_t **stack, unsigned int line_number)
 {
 	int val;
+
 	if (*stack == NULL)
 	{
 		fprintf(stderr, "L%d: can't pchar, stack empty\n", line_number);
