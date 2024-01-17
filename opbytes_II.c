@@ -67,7 +67,6 @@ void kf_mod(stack_t **stack, unsigned int line_number)
  */
 void kf_pchar(stack_t **stack, unsigned int line_number)
 {
-	int val;
 
 	if (*stack == NULL)
 	{
@@ -75,14 +74,13 @@ void kf_pchar(stack_t **stack, unsigned int line_number)
 		exit(EXIT_FAILURE);
 	}
 
-	val = (*stack)->n;
-	if (val < 0 || val > 127)
+	if ((*stack)->n < 0 || (*stack)-> n > 127)
 	{
 		fprintf(stderr, "L%d: can't pchar, value out of range\n", line_number);
 		exit(EXIT_FAILURE);
 	}
 
-	printf("%c\n", val);
+	printf("%c\n", (*stack)->n);
 }
 /**
  * kf_pstr - Prints the string starting at the top of the stack.
@@ -91,27 +89,15 @@ void kf_pchar(stack_t **stack, unsigned int line_number)
  */
 void kf_pstr(stack_t **stack, unsigned int line_number)
 {
-	stack_t *current = *stack;
+	stack_t *temp = *stack;
 
-	(void)line_number; /* line_number is unused */
+	(void)line_number;
 
-	if (stack == NULL || *stack == NULL)
+	while (temp != NULL && temp->n != 0 && (temp->n >= 0 && temp->n <= 127))
 	{
-		printf("\n");
-		return;
+		printf("%c", temp->n);
+		temp = temp->next;
 	}
 
-	while (current != NULL)
-	{
-		if (current->n > 0 && current->n <= 127)
-		{
-			printf("%c", current->n);
-		}
-		else
-		{
-			break;
-		}
-		current = current->next;
-	}
 	printf("\n");
 }
