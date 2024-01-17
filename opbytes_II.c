@@ -63,59 +63,52 @@ void kf_mod(stack_t **stack, unsigned int line_number)
 /**
  * kf_pchar - Prints the char at the top of the stack.
  * @stack: A pointer to the top of the stack.
- * @line_number: The line number where the opcode appears.
+ * @line_number: The line number in the script.
  */
 void kf_pchar(stack_t **stack, unsigned int line_number)
 {
-	stack_t *top;
-	char c;
-
-	/* Check if the stack is empty */
+	int val;
 	if (*stack == NULL)
 	{
 		fprintf(stderr, "L%d: can't pchar, stack empty\n", line_number);
 		exit(EXIT_FAILURE);
 	}
 
-	top = *stack;
-	c = (char)top->n;
-	if (c >= 32 && c <= 126) /* Only print printable ASCII characters */
-		printf("%c\n", c);
-	else
+	val = (*stack)->n;
+	if (val < 0 || val > 127)
 	{
 		fprintf(stderr, "L%d: can't pchar, value out of range\n", line_number);
 		exit(EXIT_FAILURE);
 	}
+
+	printf("%c\n", val);
 }
 /**
  * kf_pstr - Prints the string starting at the top of the stack.
  * @stack: A pointer to the top of the stack.
- * @line_number: The line number where the opcode appears.
+ * @line_number: The line number in the script.
  */
 void kf_pstr(stack_t **stack, unsigned int line_number)
 {
-	stack_t *current;
-	char c;
+	stack_t *current = *stack;
 
-	/* Check if the stack is empty */
-	if (*stack == NULL)
+	(void)line_number; /* line_number is unused */
+
+	if (stack == NULL || *stack == NULL)
 	{
 		printf("\n");
 		return;
 	}
 
-	current = *stack;
 	while (current != NULL)
 	{
-		c = (char)current->n;
-		if (c >= 32 && c <= 126) /* Only print printable ASCII characters */
-			printf("%c", c);
-		else if (c == 0)
-			break;
+		if (current->n > 0 && current->n <= 127)
 		{
-			fprintf(stderr, "L%d: can't pstr, value out of range\n",
-					line_number);
-			exit(EXIT_FAILURE);
+			printf("%c", current->n);
+		}
+		else
+		{
+			break;
 		}
 		current = current->next;
 	}
