@@ -38,11 +38,11 @@ typedef struct instruction_s
 } instruction_t;
 
 /* Function prototypes */
-void kf_push(stack_t **stack, unsigned int line_number, const char *arg);
+void kf_push(stack_t **stack, unsigned int line_number, char *arg);
 void kf_pall(stack_t **stack, unsigned int line_number);
-void kf_exec_op(stack_t **stack, unsigned int line_number,
-		char *opcode, char *arg);
-FILE *kf_open_file(char *filename);
-
+void kf_exec_op(char *opcode, char *arg, stack_t **stack,
+		unsigned int line_number);
+void kf_process_file(char *filename, stack_t **stack);
+int is_number(const char *str);
 
 #endif /* MONTY_H */

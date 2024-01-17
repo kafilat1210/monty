@@ -1,62 +1,87 @@
 #define _GNU_SOURCE
 #include <stdio.h>
-#include "monty.h"
 #include <stdlib.h>
+#include "monty.h"
 #include <string.h>
-#include <ctype.h>
-/**
- * main - Entry point
- * @argc: Argument count
- * @argv: Argument vector
- * Return: 0 always success
- */
+#include <sys/types.h>
 
-int main(int argc, char *argv[])
+/**
+ * kf_process_file - Processes a file
+ * @filename: Name of the file
+ * @stack: Pointer to stack
+ * Return: Nothing
+ */
+void kf_process_file(char *filename, stack_t **stack)
 {
 	FILE *file;
 	char *line = NULL;
 	size_t len = 0;
 	ssize_t read;
 	unsigned int line_number = 0;
-	stack_t *stack = NULL;
 	char *opcode, *arg;
 
-	if (argc != 2)
-	{
-		fprintf(stderr, "USAGE: monty file\n");
-		return (EXIT_FAILURE);
-	}
-
-	file = fopen(argv[1], "r");
+	file = fopen(filename, "r");
 	if (file == NULL)
 	{
-		fprintf(stderr, "Error: Can't open file %s\n", argv[1]);
-		return (EXIT_FAILURE);
+		fprintf(stderr, "Error: Can't open file %s\n", filename);
+		exit(EXIT_FAILURE);
 	}
 
 	while ((read = getline(&line, &len, file)) != -1)
 	{
 		line_number++;
-
-		/* Split line into opcode and argument */
-		opcode = strtok(line, " \t\n");
-		arg = strtok(NULL, " \t\n");
-
-		/* Execute opcode */
-		if (strcmp(opcode, "push") == 0)
-			kf_push(&stack, line_number, arg);
-		else if (strcmp(opcode, "pall") == 0)
-			kf_pall(&stack, line_number);
-		else
-		{
-			fprintf(stderr, "L%d: unknown instruction %s\n",
-					line_number, opcode);
-			exit(EXIT_FAILURE);
-		}
+		opcode = strtok(line, " \t\n\r");
+		arg = strtok(NULL, " \t\n\r");
+		if (opcode == NULL || opcode[0] == '#')
+			continue;
+		kf_exec_op(opcode, arg, stack, line_number);
 	}
 
 	free(line);
 	fclose(file);
+}
 
-	return (0);
+/**
+ * kf_exec_op - Executes an opcode
+ * @opcode: Opcode to execute
+ * @arg: Argument for the opcode
+ * @stack: Pointer to stack
+ * @line_number: Line number
+ * Return: Nothing
+ */
+void kf_exec_op(char *opcode, char *arg, stack_t **stack,
+		unsigned int line_number)
+{
+	if (strcmp(opcode, "push") == 0)
+		kf_push(stack, line_number, arg);
+	else if (strcmp(opcode, "pall") == 0)
+		kf_pall(stack, line_number);
+	else
+	{
+		fprintf(stderr, "L%d: unknown instruction %s\n",
+				line_number, opcode);
+		exit(EXIT_FAILURE);
+	}
+}
+
+/**
+ * main - Entry point
+ * @argc: Argument count
+ * @argv: Argument vector
+ *
+ * Return: EXIT_SUCCESS on success, EXIT_FAILURE on failure
+ */
+int main(int argc, char *argv[])
+{
+	stack_t *stack = NULL;
+
+	if (argc != 2)
+	{
+		fprintf(stderr, "USAGE: monty file\n");
+		exit(EXIT_FAILURE);
+	}
+
+	kf_process_file(argv[1], &stack);
+
+	return (EXIT_SUCCESS);
 }
