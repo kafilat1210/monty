@@ -81,7 +81,8 @@ void kf_exec_op(char *opcode, char *arg, stack_t **stack,
 		kf_pstr(stack, line_number);
 	else if (strcmp(opcode, "rotl") == 0)
 		kf_rotl(stack, line_number);
-
+	else if (strcmp(opcode, "rotr") == 0)
+		kf_rotr(stack, line_number);
 	else
 	{
 		fprintf(stderr, "L%d: unknown instruction %s\n",

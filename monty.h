@@ -59,5 +59,6 @@ void kf_mod(stack_t **stack, unsigned int line_number);
 void kf_pstr(stack_t **stack, unsigned int line_number);
 void kf_pchar(stack_t **stack, unsigned int line_number);
 void kf_rotl(stack_t **stack, unsigned int line_number);
+void kf_rotr(stack_t **stack, unsigned int line_number);
 
 #endif /* MONTY_H */
