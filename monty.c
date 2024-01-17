@@ -79,6 +79,9 @@ void kf_exec_op(char *opcode, char *arg, stack_t **stack,
 		kf_pchar(stack, line_number);
 	else if (strcmp(opcode, "pstr") == 0)
 		kf_pstr(stack, line_number);
+	else if (strcmp(opcode, "rotl") == 0)
+		kf_rotl(stack, line_number);
+
 	else
 	{
 		fprintf(stderr, "L%d: unknown instruction %s\n",
