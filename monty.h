@@ -54,5 +54,7 @@ void kf_add(stack_t **stack, unsigned int line_number);
 void kf_nop(stack_t **stack, unsigned int line_number);
 void kf_sub(stack_t **stack, unsigned int line_number);
 void kf_div(stack_t **stack, unsigned int line_number);
+void kf_mul(stack_t **stack, unsigned int line_number);
+void kf_mod(stack_t **stack, unsigned int line_number);
 
 #endif /* MONTY_H */
