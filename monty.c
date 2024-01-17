@@ -38,8 +38,8 @@ void kf_process_file(char *filename, stack_t **stack)
 	}
 
 	free(line);
-	fclose(file);
 	kf_free_stack(stack);
+	fclose(file);
 }
 
 /**
