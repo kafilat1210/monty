@@ -63,7 +63,6 @@ void kf_exec_op(char *opcode, char *arg, stack_t **stack,
 	{
 		fprintf(stderr, "L%d: unknown instruction %s\n",
 				line_number, opcode);
-		kf_free_stack(stack);
 		exit(EXIT_FAILURE);
 	}
 }
