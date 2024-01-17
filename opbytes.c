@@ -8,7 +8,7 @@
  * kf_push - pushes an element to the stack
  * @stack: double pointer to the top of the stack
  * @line_number: line number
- * @arg: value to push
+ * @arg: The string argument containing the integer to push
  *
  * Return: nothing
  */
@@ -77,4 +77,20 @@ int is_number(const char *str)
 	}
 
 	return (1);
+}
+/**
+ * kf_pint - Prints the value at the top of the stack.
+ * @stack: Double pointer to the top of the stack.
+ * @line_number: Line number.
+ *
+ * Return: nothing.
+ */
+void kf_pint(stack_t **stack, unsigned int line_number)
+{
+	if (*stack == NULL)
+	{
+		fprintf(stderr, "L%d: can't pint, stack empty\n", line_number);
+		exit(EXIT_FAILURE);
+	}
+	printf("%d\n", (*stack)->n);
 }

@@ -56,6 +56,8 @@ void kf_exec_op(char *opcode, char *arg, stack_t **stack,
 		kf_push(stack, line_number, arg);
 	else if (strcmp(opcode, "pall") == 0)
 		kf_pall(stack, line_number);
+	else if (strcmp(opcode, "pint") == 0)
+		kf_pint(stack, line_number);
 	else
 	{
 		fprintf(stderr, "L%d: unknown instruction %s\n",
