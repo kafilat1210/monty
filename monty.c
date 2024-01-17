@@ -39,6 +39,7 @@ void kf_process_file(char *filename, stack_t **stack)
 
 	free(line);
 	fclose(file);
+	kf_free_stack(stack);
 }
 
 /**
@@ -62,6 +63,7 @@ void kf_exec_op(char *opcode, char *arg, stack_t **stack,
 	{
 		fprintf(stderr, "L%d: unknown instruction %s\n",
 				line_number, opcode);
+		kf_free_stack(stack);
 		exit(EXIT_FAILURE);
 	}
 }
@@ -86,4 +88,19 @@ int main(int argc, char *argv[])
 	kf_process_file(argv[1], &stack);
 
 	return (EXIT_SUCCESS);
+}
+/**
+ * kf_free_stack - Frees a stack.
+ * @stack: A pointer to the top of the stack.
+ */
+void kf_free_stack(stack_t **stack)
+{
+	stack_t *temp;
+
+	while (*stack != NULL)
+	{
+		temp = (*stack)->next;
+		free(*stack);
+		*stack = temp;
+	}
 }
