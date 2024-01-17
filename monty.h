@@ -50,5 +50,7 @@ void kf_exec_op(char *opcode, char *arg, stack_t **stack,
 		unsigned int line_number);
 void kf_swap(stack_t **stack, unsigned int line_number);
 void kf_pop(stack_t **stack, unsigned int line_number);
+void kf_add(stack_t **stack, unsigned int line_number);
+void kf_nop(stack_t **stack, unsigned int line_number);
 
 #endif /* MONTY_H */
