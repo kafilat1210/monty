@@ -40,5 +40,9 @@ typedef struct instruction_s
 /* Function prototypes */
 void kf_push(stack_t **stack, unsigned int line_number, const char *arg);
 void kf_pall(stack_t **stack, unsigned int line_number);
+void kf_exec_op(stack_t **stack, unsigned int line_number,
+		char *opcode, char *arg);
+FILE *kf_open_file(char *filename);
+
 
 #endif /* MONTY_H */
