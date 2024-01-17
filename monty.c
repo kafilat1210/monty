@@ -67,6 +67,10 @@ void kf_exec_op(char *opcode, char *arg, stack_t **stack,
 		kf_add(stack, line_number);
 	else if (strcmp(opcode, "nop") == 0)
 		kf_nop(stack, line_number);
+	else if (strcmp(opcode, "sub") == 0)
+		kf_sub(stack, line_number);
+	else if (strcmp(opcode, "div") == 0)
+		kf_div(stack, line_number);
 	else
 	{
 		fprintf(stderr, "L%d: unknown instruction %s\n",
