@@ -75,6 +75,10 @@ void kf_exec_op(char *opcode, char *arg, stack_t **stack,
 		kf_mod(stack, line_number);
 	else if (strcmp(opcode, "mul") == 0)
 		kf_mul(stack, line_number);
+	else if (strcmp(opcode, "pchar") == 0)
+		kf_pchar(stack, line_number);
+	else if (strcmp(opcode, "pstr") == 0)
+		kf_pstr(stack, line_number);
 	else
 	{
 		fprintf(stderr, "L%d: unknown instruction %s\n",
